@@ -12,6 +12,12 @@ import (
 )
 
 func main() {
+	// Obtener el puerto desde Render
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000" // Valor por defecto en local
+	}
+
 	database, err := db.GetDB()
 	if err != nil {
 		fmt.Println("Failed to connect to database with error: ", err)
@@ -30,9 +36,9 @@ func main() {
 
 	r := routes.InitRoutes(productsHandlers, storesHandler, mainStoresHandler, productsImageHandler)
 
-	// Configurar CORS para permitir solicitudes desde localhost:3000
+	// Configurar CORS para permitir solicitudes desde cualquier origen
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedOrigins([]string{"*"}), // Permitir todas las solicitudes
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(r)
@@ -40,15 +46,10 @@ func main() {
 	fs := http.FileServer(http.Dir("./internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000" // Valor por defecto
-	}
+	// Iniciar servidor en el puerto configurado
 	err = http.ListenAndServe(":"+port, corsHandler)
-
 	if err != nil {
 		fmt.Println("Error starting server with error: ", err)
 		panic(err)
 	}
-
 }
