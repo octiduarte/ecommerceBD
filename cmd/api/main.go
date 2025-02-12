@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"simi/cmd/api/dependencies"
 	"simi/cmd/api/routes"
 	"simi/internal/utils/db"
@@ -32,7 +31,7 @@ func main() {
 
 	// Configurar CORS para permitir solicitudes desde localhost:3000
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedOrigins([]string{"http://localhost:3000"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(r)
@@ -40,12 +39,7 @@ func main() {
 	fs := http.FileServer(http.Dir("./internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000" // Usa 8000 por defecto si no está definido
-	}
-
-	err = http.ListenAndServe(":"+port, corsHandler)
+	err = http.ListenAndServe(":8000", corsHandler)
 
 	if err != nil {
 		fmt.Println("Error starting server with error: ", err)
