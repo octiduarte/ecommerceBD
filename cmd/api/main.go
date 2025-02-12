@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/handlers"
 	"net/http"
+	"os"
 	"simi/cmd/api/dependencies"
 	"simi/cmd/api/routes"
 	"simi/internal/utils/db"
+
+	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -30,7 +32,7 @@ func main() {
 
 	// Configurar CORS para permitir solicitudes desde localhost:3000
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:3000"}),
+		handlers.AllowedOrigins([]string{"*"}), // Permite desde cualquier origen (temporalmente)
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(r)
@@ -38,7 +40,12 @@ func main() {
 	fs := http.FileServer(http.Dir("./internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
-	err = http.ListenAndServe(":8000", corsHandler)
+	port := os.Getenv("PORT") // Obtiene el puerto de Railway
+	if port == "" {
+		port = "8000" // Usa 8000 por defecto si no está definido
+	}
+	fmt.Println("Server running on port:", port)
+	err = http.ListenAndServe(":"+port, corsHandler)
 
 	if err != nil {
 		fmt.Println("Error starting server with error: ", err)
