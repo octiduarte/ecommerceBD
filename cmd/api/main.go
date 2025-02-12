@@ -32,7 +32,7 @@ func main() {
 
 	// Configurar CORS para permitir solicitudes desde localhost:3000
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}), // Permite desde cualquier origen (temporalmente)
+		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(r)
@@ -40,11 +40,11 @@ func main() {
 	fs := http.FileServer(http.Dir("./internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
-	port := os.Getenv("PORT") // Obtiene el puerto de Railway
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8000" // Usa 8000 por defecto si no está definido
 	}
-	fmt.Println("Server running on port:", port)
+
 	err = http.ListenAndServe(":"+port, corsHandler)
 
 	if err != nil {
