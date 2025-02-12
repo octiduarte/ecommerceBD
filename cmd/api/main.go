@@ -40,11 +40,10 @@ func main() {
 	fs := http.FileServer(http.Dir("./internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
-	port := os.Getenv("PORT") // Railway asigna el puerto dinámicamente
+	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8000" // Valor por defecto si no se encuentra la variable
+		port = "8000" // Valor por defecto
 	}
-
 	err = http.ListenAndServe(":"+port, corsHandler)
 
 	if err != nil {
