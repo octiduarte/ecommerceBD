@@ -1,12 +1,13 @@
 package products_service
 
 import (
+	"os"
 	"simi/internal/domain/interfaces"
 	"simi/internal/domain/model"
 	"simi/internal/domain/model/entities"
 )
 
-const pathImageAccess = "http://localhost:8000/image/"
+var pathImageAccess = os.Getenv("IMAGE_BASE_URL") + "/image/"
 
 type ProductsService struct {
 	productsRepository interfaces.ProductsRepository
