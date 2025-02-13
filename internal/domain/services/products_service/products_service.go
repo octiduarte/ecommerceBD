@@ -6,7 +6,7 @@ import (
 	"simi/internal/domain/model/entities"
 )
 
-const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/image/"
+const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/internal/image/"
 
 
 type ProductsService struct {
