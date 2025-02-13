@@ -4,11 +4,9 @@ import (
 	"simi/internal/domain/interfaces"
 	"simi/internal/domain/model"
 	"simi/internal/domain/model/entities"
-	"path/filepath"
 )
 
-const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/image/"
-
+const pathImageAccess = "http://localhost:8000/image/"
 
 type ProductsService struct {
 	productsRepository interfaces.ProductsRepository
@@ -25,7 +23,7 @@ func (s ProductsService) GetProductByID(id int) (productResponse model.ProductPa
 		return productResponse, err
 	}
 	for _, image := range productResponse.Images {
-		images = append(images, pathImageAccess+filepath.Join(productResponse.StoreName, image))
+		images = append(images, pathImageAccess+productResponse.StoreName+image)
 	}
 	productResponse.Images = images
 	return productResponse, nil
