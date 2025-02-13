@@ -46,7 +46,7 @@ func (s ImageService) UploadStoreImage(fileLogo multipart.File, handlerLogo *mul
 	if err != nil {
 		return err
 	}
-	imagePathLogo := filepath.Join("internal", "image", store.Name, handlerLogo.Filename)
+	imagePathLogo := filepath.Join("public", "image", store.Name, handlerLogo.Filename)
 	destFileLogo, err := os.Create(imagePathLogo)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func (s ImageService) UploadStoreImage(fileLogo multipart.File, handlerLogo *mul
 		return err
 	}
 
-	imagePathBanner := filepath.Join("internal", "image", store.Name, handlerBanner.Filename)
+	imagePathBanner := filepath.Join("public", "image", store.Name, handlerBanner.Filename)
 	destFileBanner, err := os.Create(imagePathBanner)
 	if err != nil {
 		return err

@@ -20,7 +20,7 @@ func main() {
 	}
 	defer database.Close()
 
-	fmt.Println("Connected to sex")
+	fmt.Println("Connected to database")
 
 	// Inicializar manejadores de dependencias
 	dm := dependencies.NewDependencyManager(database)
