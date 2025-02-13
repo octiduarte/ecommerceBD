@@ -2,12 +2,12 @@ package main_stores_repo
 
 import (
 	"database/sql"
-	"os"
+
 	"simi/internal/domain/model"
 	"simi/internal/domain/model/entities"
 )
 
-var pathImageAccess = os.Getenv("IMAGE_BASE_URL") + "/image/"
+const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/image/"
 
 type MainStoresRepo struct {
 	db *sql.DB
