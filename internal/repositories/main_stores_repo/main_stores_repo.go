@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"simi/internal/domain/model"
 	"simi/internal/domain/model/entities"
+	"os"
 )
 
-const pathImageAccess = "http://localhost:8000/image/"
+var pathImageAccess = os.Getenv("BASE_URL") + "/image/"
 
 type MainStoresRepo struct {
 	db *sql.DB
@@ -76,8 +77,13 @@ func (r MainStoresRepo) GetMainStore(storeID int) (response model.MainResponse, 
 		}
 	}
 
-	response.Store.Logo = pathImageAccess + response.Store.Name + "/" + response.Store.Logo
-	response.Store.Banner = pathImageAccess + response.Store.Name + "/" + response.Store.Banner
+	if response.Store.Logo != "" {
+		response.Store.Logo = pathImageAccess + response.Store.Name + "/" + response.Store.Logo
+	}
+	if response.Store.Banner != "" {
+		response.Store.Banner = pathImageAccess + response.Store.Name + "/" + response.Store.Banner
+	}
+	
 
 	return response, nil
 }
