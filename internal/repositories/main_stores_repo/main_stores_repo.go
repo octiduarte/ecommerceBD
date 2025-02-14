@@ -67,7 +67,7 @@ func (r MainStoresRepo) GetMainStore(storeID int) (response model.MainResponse, 
 
 		if !productMap[productID] {
 			product := model.MainProduct{ProductID: int64(productID),
-				Image:           pathImageAccess + response.Store.Name + "/" + productImage,
+				Image:           pathImageAccess + strings.ToLower(response.Store.Name) + productImage,
 				Name:            productName,
 				Price:           float64(price),
 				Category:        categoryName,
