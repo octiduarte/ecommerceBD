@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"simi/internal/domain/model"
 	"simi/internal/domain/model/entities"
+	"strings"
 )
 
 const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/image/"
@@ -76,8 +77,8 @@ func (r MainStoresRepo) GetMainStore(storeID int) (response model.MainResponse, 
 		}
 	}
 
-	response.Store.Logo = pathImageAccess + response.Store.Name + "/" + response.Store.Logo
-	response.Store.Banner = pathImageAccess + response.Store.Name + "/" + response.Store.Banner
+	response.Store.Logo = pathImageAccess + strings.ToLower(response.Store.Name) + "/" + response.Store.Logo
+	response.Store.Banner = pathImageAccess + strings.ToLower(response.Store.Name) + "/" + response.Store.Banner
 
 	return response, nil
 }
