@@ -41,7 +41,7 @@ func main() {
 	)(r)
 
 	// Servir imágenes desde la carpeta interna
-	fs := http.FileServer(http.Dir("internal/image"))
+	fs := http.FileServer(http.Dir("/app/internal/image"))
 	r.PathPrefix("/image/").Handler(http.StripPrefix("/image/", fs))
 
 	// Obtener el puerto desde la variable de entorno (si no está, usar 8000 por defecto)
