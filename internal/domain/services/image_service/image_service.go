@@ -24,8 +24,7 @@ func NewImageService(productsImageRepo interfaces.ImageRepository,
 func (s ImageService) UploadProductsImage(file multipart.File, handler *multipart.FileHeader, productID string) error {
 	storeName, err := s.productsRepo.GetStoreNameByProductID(productID)
 
-	imagePath := filepath.Join("/app/internal/image", storeName, handler.Filename)
-
+	imagePath := filepath.Join("internal", "image", storeName, handler.Filename)
 	destFile, err := os.Create(imagePath)
 	if err != nil {
 		return err

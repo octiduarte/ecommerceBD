@@ -6,7 +6,7 @@ import (
 	"simi/internal/domain/model/entities"
 )
 
-const pathImageAccess = "http://localhost:8000/image/"
+const pathImageAccess = "https://ecommercebd-production-6168.up.railway.app/image/"
 
 type MainStoresRepo struct {
 	db *sql.DB
